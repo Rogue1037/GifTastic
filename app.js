@@ -1,32 +1,35 @@
 $(document).ready(function () {
 
 
-    $("button").on("click", function() {
-    var person = $(this).attr("data-person");
+  $("button").on("click", function () {
+    var starWars = $(this).attr("data-person");
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-      person + "&api_key=dc6zaTOxFJmzC&limit=10";
+      starWars + "&api_key=KqCBcYAEiBo2996GCw7pmzC3FwUjcaNw";
 
     $.ajax({
       url: queryURL,
       method: "GET"
     })
-      .then(function(response) {
+      .then(function (response) {
         var results = response.data;
-
+        console.log(results);
         for (var i = 0; i < results.length; i++) {
-          var gifDiv = $("<div>");
+          var starWarsDiv = $("<div>");
 
+          var title = results[i].title;
           var rating = results[i].rating;
+          var embed = results[i].embed_url;
 
-          var p = $("<p>").text("Rating: " + rating);
 
-          var personImage = $("<img>");
-          personImage.attr("src", results[i].images.fixed_height.url);
+          var p = $("<p>").text("Rating: " + rating + " Title: " + title + " Embed Link: " + embed);
 
-          gifDiv.prepend(p);
-          gifDiv.prepend(personImage);
+          var starWarsImage = $("<img>");
+          starWarsImage.attr("src", results[i].images.fixed_height.url);
 
-          $("#gifsDiv").prepend(gifDiv);
+          starWarsDiv.prepend(p);
+          starWarsDiv.prepend(starWarsImage);
+
+          $("#gifsDiv").prepend(starWarsDiv);
         }
       });
   });
